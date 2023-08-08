@@ -14,7 +14,7 @@ module FileReading
     File.open(file_name, 'r') do |file|
       file.each_line do |line|
         line_parts = line.chomp.split(',')
-        next if line_parts.empty?
+        next if line_parts.empty? # next if line.include?('TemperatureC') || line.include?('<')
         next unless line_parts[0].match?(/^\d{4}-\d{1,2}-\d{1,2}/)
 
         daily_high_temp = line_parts[1].to_i
@@ -36,7 +36,7 @@ module FileReading
     e.message
   end
 
-  def read_average_metrics(file_name, _type)
+  def read_average_metrics(file_name, type)
     sum = 0.0
     count = 0
     File.open(file_name, 'r') do |file|
@@ -46,7 +46,7 @@ module FileReading
         next unless line_parts[0].match?(/^\d{4}-\d{1,2}-\d{1,2}/)
 
         count += 1
-        case humidity
+        case type
         when 'humidity'
           sum += line_parts[8].to_f
         when 'highTemp'

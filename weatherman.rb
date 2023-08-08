@@ -17,10 +17,10 @@ begin
   raise CustomArgumentError, 'Not valid flag' unless valid_flags.include?(ARGV[0])
 
   flag = ARGV[0]
-  if flag == '-e'
-    raise CustomArgumentError, 'Date is not in the correct format(YYYY)!' unless ARGV[1].match?(/^\d{4}$/)
-  else
-    raise CustomArgumentError, 'Date is not in the correct format(YYYY/MM)!' unless ARGV[1].match?(%r{^\d{4}/\d{1,2}$})
+  if flag == '-e' && !ARGV[1].match?(/^\d{4}$/)
+    raise CustomArgumentError, 'Date is not in the correct format(YYYY)!'
+  elsif !ARGV[1].match?(%r{^\d{4}/\d{1,2}$})
+    raise CustomArgumentError, 'Date is not in the correct format(YYYY/MM)!'
   end
   date = ARGV[1]
   path = ARGV[2]
