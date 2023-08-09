@@ -18,7 +18,7 @@ module FileReading
     end
     files_array
   rescue StandardError => e
-    e.message
+    e.backtrace
   end
 
 

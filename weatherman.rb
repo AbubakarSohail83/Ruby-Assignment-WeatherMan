@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'extreme_weather_conditions'
-# require_relative 'draw_chart'
-# require_relative 'average_weather_conditions'
+require_relative 'yearly_weather_metrics'
+require_relative 'monthly_weather_metrics'
 
 begin
   valid_flags = %w[-e -a -c]
@@ -20,16 +19,16 @@ begin
   path = ARGV[2]
   case flag
   when '-e'
-    extreme_weather = ExtremeWeatherConditions.new(date, path)
+    yearly_weather = YearlyWeatherMetrics.new(date, path)
 
-    # puts "Highest: #{extreme_weather.max_yearly_temp[:temp]}C on #{extreme_weather.max_yearly_temp[:month]}"
-    # puts "Lowest: #{extreme_weather.min_yearly_temp[:temp]}C on #{extreme_weather.min_yearly_temp[:month]}"
-    # puts "Humid: #{extreme_weather.max_humidity[:humidity]}% on #{extreme_weather.max_humidity[:month]}"
-   # when '-a'
-    # average_weather = AverageWeatherConditions.new(date, path)
-   #   puts "Highest Average: #{average_weather.avg_highest_temperature} C "
-   #   puts "Lowest Average: #{average_weather.avg_lowest_temperature} C "
-   #   puts "Average Humidity: #{average_weather.avg_humidity} % "
+    puts "Highest: #{yearly_weather.max_yearly_temp[:temp]}C on #{yearly_weather.max_yearly_temp[:month]}"
+    puts "Lowest: #{yearly_weather.min_yearly_temp[:temp]}C on #{yearly_weather.min_yearly_temp[:month]}"
+    puts "Humid: #{yearly_weather.max_humidity[:humidity]}% on #{yearly_weather.max_humidity[:month]}"
+  when '-a'
+    average_weather = MonthlyWeatherMetrics.new(date, path)
+    puts "Highest Average: #{average_weather.avg_highest_temp} C "
+    puts "Lowest Average: #{average_weather.avg_lowest_temp} C "
+    puts "Average Humidity: #{average_weather.avg_humidity} % "
    # when '-c'
     #  draw_chart = DrawChart.new(date, path)
     # draw_chart.draw_chart
