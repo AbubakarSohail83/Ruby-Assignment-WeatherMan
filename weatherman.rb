@@ -20,9 +20,9 @@ begin
   when '-e'
     yearly_weather = YearlyWeatherMetrics.new(date, path)
 
-    puts "Highest: #{yearly_weather.max_yearly_temp[:temp]}C on #{yearly_weather.max_yearly_temp[:month]}"
-    puts "Lowest: #{yearly_weather.min_yearly_temp[:temp]}C on #{yearly_weather.min_yearly_temp[:month]}"
-    puts "Humid: #{yearly_weather.max_humidity[:humidity]}% on #{yearly_weather.max_humidity[:month]}"
+    puts "Highest: #{yearly_weather.max_yearly_temp[:val]}C on #{yearly_weather.max_yearly_temp[:month]}"
+    puts "Lowest: #{yearly_weather.min_yearly_temp[:val]}C on #{yearly_weather.min_yearly_temp[:month]}"
+    puts "Humid: #{yearly_weather.max_humidity[:val]}% on #{yearly_weather.max_humidity[:month]}"
   when '-a'
     average_weather = MonthlyWeatherMetrics.new(date, path)
     puts "Highest Average: #{average_weather.avg_highest_temp} C "
@@ -34,5 +34,6 @@ begin
 
   end
 rescue StandardError => e
+  puts e.message
   puts e.backtrace_locations
 end
