@@ -25,29 +25,32 @@ class MonthlyWeatherMetrics
     @month = months[date_arr[1].to_i]
     @year = date_arr[0].to_s
     @file_data = read_files_from_folder(path, "#{@year}_#{@month}")
-    @avg_highest_temp = calc_avg_metrics('avg_max_temp')
-    @avg_lowest_temp = calc_avg_metrics('avg_min_temp')
-    @avg_humidity = calc_avg_metrics('avg_humidity')
+    calc_avg_metrics
   end
 
-  def calc_avg_metrics(type)
-    sum = 0.0
+  def calc_avg_metrics
+    temp_data = [
+      { sum: 0.0,  index: 1, result: 0.0 },
+      { sum: 0.0,  index: 3, result: 0.0 },
+      { sum: 0.0,  index: 7, result: 0.0 }
+    ]
     count = 0.0
     @file_data.each do |file|
       file.each do |line|
-        case type
-        when 'avg_max_temp'
-          sum += line.chomp.split(',')[1].to_f
-        when 'avg_min_temp'
-          sum += line.chomp.split(',')[3].to_f
-        when 'avg_humidity'
-          sum += line.chomp.split(',')[7].to_f
+        temp_data.each do |temp|
+          temp[:sum] += line.chomp.split(',')[temp[:index]].to_f
         end
         count += 1
       end
     end
-    (sum / count).round(2)
+    temp_data.each do |temp|
+      temp[:result] = (temp[:sum] / count).round(2)
+    end
+    @avg_highest_temp = temp_data[0][:result]
+    @avg_lowest_temp = temp_data[1][:result]
+    @avg_humidity = temp_data[2][:result]
   rescue StandardError => e
+    p e.backtrace_locations
     p e.message
   end
 
