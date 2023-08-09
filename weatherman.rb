@@ -9,12 +9,11 @@ begin
   raise StandardError, 'Not valid flag' unless valid_flags.include?(ARGV[0])
 
   flag = ARGV[0]
-  if flag == '-e' && !ARGV[1].match?(/^\d{4}$/)
-    raise StandardError, 'Date is not in the correct format(YYYY)!'
-  end
-  if flag!='-e' && !ARGV[1].match?(%r{^\d{4}/\d{1,2}$})
+  raise StandardError, 'Date is not in the correct format(YYYY)!' if flag == '-e' && !ARGV[1].match?(/^\d{4}$/)
+  if flag != '-e' && !ARGV[1].match?(%r{^\d{4}/\d{1,2}$})
     raise StandardError, 'Date is not in the correct format(YYYY/MM)!'
   end
+
   date = ARGV[1]
   path = ARGV[2]
   case flag
@@ -29,10 +28,11 @@ begin
     puts "Highest Average: #{average_weather.avg_highest_temp} C "
     puts "Lowest Average: #{average_weather.avg_lowest_temp} C "
     puts "Average Humidity: #{average_weather.avg_humidity} % "
-   # when '-c'
-    #  draw_chart = DrawChart.new(date, path)
-    # draw_chart.draw_chart
+  when '-c'
+    draw_chart = MonthlyWeatherMetrics.new(date, path)
+    draw_chart.draw_monthly_weather_chart
+
   end
 rescue StandardError => e
-  puts e.message
+  puts e.backtrace_locations
 end
