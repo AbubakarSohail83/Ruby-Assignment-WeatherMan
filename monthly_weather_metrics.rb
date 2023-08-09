@@ -54,6 +54,8 @@ class MonthlyWeatherMetrics
     p e.message
   end
 
+
+
   def draw_monthly_weather_chart
     puts "#{@month} #{@year}"
     count = 1
