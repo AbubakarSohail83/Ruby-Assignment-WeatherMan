@@ -20,14 +20,14 @@ begin
   when '-e'
     yearly_weather = YearlyWeatherMetrics.new(date, path)
 
-    puts "Highest: #{yearly_weather.max_yearly_temp[:val]}C on #{yearly_weather.max_yearly_temp[:month]}"
-    puts "Lowest: #{yearly_weather.min_yearly_temp[:val]}C on #{yearly_weather.min_yearly_temp[:month]}"
+    puts "Highest: #{yearly_weather.max_temp[:val]}C on #{yearly_weather.max_temp[:month]}"
+    puts "Lowest: #{yearly_weather.min_temp[:val]}C on #{yearly_weather.min_temp[:month]}"
     puts "Humid: #{yearly_weather.max_humidity[:val]}% on #{yearly_weather.max_humidity[:month]}"
   when '-a'
     average_weather = MonthlyWeatherMetrics.new(date, path)
-    puts "Highest Average: #{average_weather.avg_highest_temp} C "
-    puts "Lowest Average: #{average_weather.avg_lowest_temp} C "
-    puts "Average Humidity: #{average_weather.avg_humidity} % "
+    puts "Highest Average: #{average_weather.avg_max_temp[:result]} C "
+    puts "Lowest Average: #{average_weather.avg_min_temp[:result]} C "
+    puts "Average Humidity: #{average_weather.avg_humidity[:result]} % "
   when '-c'
     draw_chart = MonthlyWeatherMetrics.new(date, path)
     draw_chart.draw_monthly_weather_chart
